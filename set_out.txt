@@ -1,0 +1,65 @@
+12:22:40.719
+Full list of groups
+*******************
+Group [groupId=1, nameGroup=FirstGroup, curator=Sergei Ivanich, speciality=Mathematics]
+Group [groupId=2, nameGroup=SecondGroup, curator=Vasili Petrovich, speciality=Phisics]
+
+Full list of Students
+*********************
+Student [studentId=1, firstName=Vasili, surName=Ivanov, groupId=2, educationYear=2006]
+Student [studentId=2, firstName=Natalia, surName=Semenova, groupId=2, educationYear=2006]
+Student [studentId=3, firstName=Maxim, surName=Zaebalov, groupId=1, educationYear=2006]
+Student [studentId=4, firstName=Marina, surName=Krasotkina, groupId=1, educationYear=2006]
+
+List of all students BY particular group
+****************************************
+---> Group: FirstGroup
+Student [studentId=3, firstName=Maxim, surName=Zaebalov, groupId=1, educationYear=2006]
+Student [studentId=4, firstName=Marina, surName=Krasotkina, groupId=1, educationYear=2006]
+---> Group: SecondGroup
+Student [studentId=1, firstName=Vasili, surName=Ivanov, groupId=2, educationYear=2006]
+Student [studentId=2, firstName=Natalia, surName=Semenova, groupId=2, educationYear=2006]
+
+Adding new student: Student [studentId=5, firstName=Oleg, surName=Buhlakov, groupId=1, educationYear=2006]
+********************
+--> Full list of students after addition
+Student [studentId=1, firstName=Vasili, surName=Ivanov, groupId=2, educationYear=2006]
+Student [studentId=2, firstName=Natalia, surName=Semenova, groupId=2, educationYear=2006]
+Student [studentId=3, firstName=Maxim, surName=Zaebalov, groupId=1, educationYear=2006]
+Student [studentId=4, firstName=Marina, surName=Krasotkina, groupId=1, educationYear=2006]
+Student [studentId=5, firstName=Oleg, surName=Buhlakov, groupId=1, educationYear=2006]
+
+Modifing student info: Student [studentId=5, firstName=Oleg, surName=NewBuhlakov, groupId=1, educationYear=2006]
+********************
+--> Full list of students after modification
+Student [studentId=1, firstName=Vasili, surName=Ivanov, groupId=2, educationYear=2006]
+Student [studentId=2, firstName=Natalia, surName=Semenova, groupId=2, educationYear=2006]
+Student [studentId=3, firstName=Maxim, surName=Zaebalov, groupId=1, educationYear=2006]
+Student [studentId=4, firstName=Marina, surName=Krasotkina, groupId=1, educationYear=2006]
+Student [studentId=5, firstName=Oleg, surName=Buhlakov, groupId=1, educationYear=2006]
+Student [studentId=5, firstName=Oleg, surName=NewBuhlakov, groupId=1, educationYear=2006]
+
+Deleting a student:Student [studentId=5, firstName=Oleg, surName=NewBuhlakov, groupId=1, educationYear=2006]
+*******************
+--->> Full list of Students after deletion
+Student [studentId=1, firstName=Vasili, surName=Ivanov, groupId=2, educationYear=2006]
+Student [studentId=2, firstName=Natalia, surName=Semenova, groupId=2, educationYear=2006]
+Student [studentId=3, firstName=Maxim, surName=Zaebalov, groupId=1, educationYear=2006]
+Student [studentId=4, firstName=Marina, surName=Krasotkina, groupId=1, educationYear=2006]
+Student [studentId=5, firstName=Oleg, surName=NewBuhlakov, groupId=1, educationYear=2006]
+
+Moving students from first group to second group
+************************************************
+--->> Full list of students after moving to the new group
+Student [studentId=1, firstName=Vasili, surName=Ivanov, groupId=2, educationYear=2006]
+Student [studentId=2, firstName=Natalia, surName=Semenova, groupId=2, educationYear=2006]
+Student [studentId=3, firstName=Maxim, surName=Zaebalov, groupId=2, educationYear=2007]
+Student [studentId=4, firstName=Marina, surName=Krasotkina, groupId=2, educationYear=2007]
+Student [studentId=5, firstName=Oleg, surName=NewBuhlakov, groupId=2, educationYear=2007]
+
+Deleting students from the group: Group [groupId=2, nameGroup=SecondGroup, curator=Vasili Petrovich, speciality=Phisics] in the year 2006
+*************************************************************
+--->> Full list of students after deletion
+Student [studentId=3, firstName=Maxim, surName=Zaebalov, groupId=2, educationYear=2007]
+Student [studentId=4, firstName=Marina, surName=Krasotkina, groupId=2, educationYear=2007]
+Student [studentId=5, firstName=Oleg, surName=NewBuhlakov, groupId=2, educationYear=2007]
