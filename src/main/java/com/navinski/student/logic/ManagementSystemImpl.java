@@ -34,133 +34,133 @@ public class ManagementSystemImpl {
 	}
 	
 	// Main Method, to be started at the beginning of the application
-	public static void main (String[] args) {
-		// following code will allow us to redirect standard output to the file
-		// Because text printed to the console is not very suitable for our purposes
-		// we will print text to the file
-		try {
-			System.setOut(new PrintStream("set_out.txt"));
-		} catch (FileNotFoundException ex) {
-			ex.printStackTrace();
-			return;
-		}
-		
-		ManagementSystemImpl ms = ManagementSystemImpl.getInstance();
-		
-		// Printing the full list of groups
-		printString(LocalTime.now());
-		printString("Full list of groups");
-		printString("*******************");
-		List<Group> allGroups = ms.getGroups();
-		for (Group gi : allGroups) {
-			printString(gi);
-		}
-		printString();
-		
-		// Printing the full list of Students
-		printString("Full list of Students");
-		printString("*********************");
-		Collection<Student> allStudents = ms.getAllStudents();
-		for(Student si : allStudents) {
-			printString(si);
-		}
-		printString();
-		
-		// Printing all the students BY particular group
-		printString("List of all students BY particular group");
-		printString("****************************************");
-		List<Group> groups = ms.getGroups();
-		// checking all the groups
-		for (Group gi : groups) {
-			printString("---> Group: " + gi.getNameGroup());
-			// getting all the students for particular group
-			Collection<Student> students = ms.getStudentsFromGroup(gi, 2006);
-			for (Student si : students) {
-				printString(si);
-			}
-		}
-		printString();
-		
-		// Lets create new student and add him to the list
-		Student s = new Student();
-		s.setStudentId(5);
-		s.setFirstName("Oleg");
-		s.setPatronymic("G");
-		s.setSurName("Buhlakov");
-		s.setSex('m');
-		Calendar c1 = Calendar.getInstance();
-		c1.set(1991,  8, 31);
-		s.setDateOfBirth(c1.getTime());
-		s.setGroupId(1);
-		s.setEducationYear(2006);
-		printString("Adding new student: " + s);
-		printString("********************");
-		ms.insertStudent(s);
-		printString("--> Full list of students after addition");
-		allStudents = ms.getAllStudents();
-		for (Student si : allStudents) {
-			printString(si);
-		}
-		printString();
-		
-		// Lets change all info about particular student
-		// we will create a student entry with a existing id
-		s = new Student();
-		s.setStudentId(5);
-		s.setFirstName("Oleg");
-		s.setPatronymic("G");
-		s.setSurName("NewBuhlakov");
-		s.setSex('m');
-		c1 = Calendar.getInstance();
-		c1.set(1991,  8, 31);
-		s.setDateOfBirth(c1.getTime());
-		s.setGroupId(1);
-		s.setEducationYear(2006);
-		printString("Modifing student info: " + s);
-		printString("********************");
-		ms.insertStudent(s);
-		printString("--> Full list of students after modification");
-		allStudents = ms.getAllStudents();
-		for (Student si : allStudents) {
-			printString(si);
-		}
-		printString();
-		
-		// Lets delete particular student
-		printString("Deleting a student:" + s);
-		printString("*******************");
-		ms.deleteStudent(s);
-		printString("--->> Full list of Students after deletion");
-		allStudents = ms.getAllStudents();
-		for(Student si : allStudents) {
-			printString(si);
-		}
-		printString();
-		
-		// Here we will move all students from one group to another
-		Group g1 = groups.get(0);
-		Group g2 = groups.get(1);
-		
-		printString("Moving students from first group to second group");
-		printString("************************************************");
-		ms.moveStudentsToGroup(g1, 2006, g2, 2007);
-		printString("--->> Full list of students after moving to the new group");
-		allStudents = ms.getAllStudents();
-		for(Student si : allStudents) {
-			printString(si);
-		}
-		printString();
-		
-		// Deleting students from the group
-		printString("Deleting students from the group: " + g2 + " in the year 2006");
-		printString("*************************************************************");
-		ms.removeStudentsFromGroup(g2,  2006);
-		printString("--->> Full list of students after deletion");
-		allStudents = ms.getAllStudents();
-		for (Iterator i = allStudents.iterator(); i.hasNext();) {
-			printString(i.next());
-		}
-	}
+//	public static void main (String[] args) {
+//		// following code will allow us to redirect standard output to the file
+//		// Because text printed to the console is not very suitable for our purposes
+//		// we will print text to the file
+//		try {
+//			System.setOut(new PrintStream("set_out.txt"));
+//		} catch (FileNotFoundException ex) {
+//			ex.printStackTrace();
+//			return;
+//		}
+//		
+//		ManagementSystemImpl ms = ManagementSystemImpl.getInstance();
+//		
+//		// Printing the full list of groups
+//		printString(LocalTime.now());
+//		printString("Full list of groups");
+//		printString("*******************");
+//		List<Group> allGroups = ms.getGroups();
+//		for (Group gi : allGroups) {
+//			printString(gi);
+//		}
+//		printString();
+//		
+//		// Printing the full list of Students
+//		printString("Full list of Students");
+//		printString("*********************");
+//		Collection<Student> allStudents = ms.getAllStudents();
+//		for(Student si : allStudents) {
+//			printString(si);
+//		}
+//		printString();
+//		
+//		// Printing all the students BY particular group
+//		printString("List of all students BY particular group");
+//		printString("****************************************");
+//		List<Group> groups = ms.getGroups();
+//		// checking all the groups
+//		for (Group gi : groups) {
+//			printString("---> Group: " + gi.getNameGroup());
+//			// getting all the students for particular group
+//			Collection<Student> students = ms.getStudentsFromGroup(gi, 2006);
+//			for (Student si : students) {
+//				printString(si);
+//			}
+//		}
+//		printString();
+//		
+//		// Lets create new student and add him to the list
+//		Student s = new Student();
+//		s.setStudentId(5);
+//		s.setFirstName("Oleg");
+//		s.setPatronymic("G");
+//		s.setSurName("Buhlakov");
+//		s.setSex('m');
+//		Calendar c1 = Calendar.getInstance();
+//		c1.set(1991,  8, 31);
+//		s.setDateOfBirth(c1.getTime());
+//		s.setGroupId(1);
+//		s.setEducationYear(2006);
+//		printString("Adding new student: " + s);
+//		printString("********************");
+//		ms.insertStudent(s);
+//		printString("--> Full list of students after addition");
+//		allStudents = ms.getAllStudents();
+//		for (Student si : allStudents) {
+//			printString(si);
+//		}
+//		printString();
+//		
+//		// Lets change all info about particular student
+//		// we will create a student entry with a existing id
+//		s = new Student();
+//		s.setStudentId(5);
+//		s.setFirstName("Oleg");
+//		s.setPatronymic("G");
+//		s.setSurName("NewBuhlakov");
+//		s.setSex('m');
+//		c1 = Calendar.getInstance();
+//		c1.set(1991,  8, 31);
+//		s.setDateOfBirth(c1.getTime());
+//		s.setGroupId(1);
+//		s.setEducationYear(2006);
+//		printString("Modifing student info: " + s);
+//		printString("********************");
+//		ms.insertStudent(s);
+//		printString("--> Full list of students after modification");
+//		allStudents = ms.getAllStudents();
+//		for (Student si : allStudents) {
+//			printString(si);
+//		}
+//		printString();
+//		
+//		// Lets delete particular student
+//		printString("Deleting a student:" + s);
+//		printString("*******************");
+//		ms.deleteStudent(s);
+//		printString("--->> Full list of Students after deletion");
+//		allStudents = ms.getAllStudents();
+//		for(Student si : allStudents) {
+//			printString(si);
+//		}
+//		printString();
+//		
+//		// Here we will move all students from one group to another
+//		Group g1 = groups.get(0);
+//		Group g2 = groups.get(1);
+//		
+//		printString("Moving students from first group to second group");
+//		printString("************************************************");
+//		ms.moveStudentsToGroup(g1, 2006, g2, 2007);
+//		printString("--->> Full list of students after moving to the new group");
+//		allStudents = ms.getAllStudents();
+//		for(Student si : allStudents) {
+//			printString(si);
+//		}
+//		printString();
+//		
+//		// Deleting students from the group
+//		printString("Deleting students from the group: " + g2 + " in the year 2006");
+//		printString("*************************************************************");
+//		ms.removeStudentsFromGroup(g2,  2006);
+//		printString("--->> Full list of students after deletion");
+//		allStudents = ms.getAllStudents();
+//		for (Iterator i = allStudents.iterator(); i.hasNext();) {
+//			printString(i.next());
+//		}
+//	}
 	
 	
 	
