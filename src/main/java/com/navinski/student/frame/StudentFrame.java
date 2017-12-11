@@ -6,8 +6,11 @@ import java.util.Vector;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridLayout;
- 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,7 +31,7 @@ import javax.swing.border.BevelBorder;
 import com.navinski.student.logic.Group;
 import com.navinski.student.logic.ManagementSystemImpl;
 
-public class StudentFrame extends JFrame {
+public class StudentFrame extends JFrame implements ActionListener {
 	//lets create buttons names - which will be used later
 	private static final String MOVE_GR = "moveGroup";
 	private static final String CLEAR_GR = "clearGroup";
@@ -52,11 +55,11 @@ public class StudentFrame extends JFrame {
         // lets create drop down menu
         JMenu menu = new JMenu("Reports");
         
-        // let create a point int the drop down menu
+        // let create a point into the drop down menu
         JMenuItem menuItem = new JMenuItem("All students");
         menuItem.setName(ALL_STUDENTS);
         // adding a listener
-//        menuItem.addActionListener(this);
+        menuItem.addActionListener(this);
         // inserting point into drop down menu
         menu.add(menuItem);
         // inserting drop down menu into the menu bar
@@ -101,7 +104,7 @@ public class StudentFrame extends JFrame {
         btnMvGr.setName(MOVE_GR);
         JButton btnClGr = new JButton("Clear");
         btnClGr.setName(CLEAR_GR);
-        // creating the panel in wich our buttons will be placed at
+        // creating the panel in which our buttons will be placed at
         JPanel pnlBtnGr = new JPanel();
         pnlBtnGr.setLayout(new GridLayout(1, 2));
         pnlBtnGr.add(btnMvGr);
@@ -171,6 +174,36 @@ public class StudentFrame extends JFrame {
         setBounds(100, 100, 600, 400);
     }
  
+    public void actionPerformed(ActionEvent e) {
+		if (e.getSource() instanceof Component) {
+			Component c = (Component) e.getSource();
+			if (c.getName().equals(MOVE_GR)) {
+				moveGroup();
+			}
+			if (c.getName().equals(CLEAR_GR)) {
+				clearGroup();
+			}
+			if (c.getName().equals(ALL_STUDENTS)) {
+				showAllStudents();
+			}
+			if (c.getName().equals(INSERT_ST)) {
+				insertStudent();
+			}
+			if (c.getName().equals(UPDATE_ST)) {
+				updateStudent();
+			}
+			if (c.getName().equals(DELETE_ST)) {
+				deleteStudent();
+			}
+		}
+	}
+    
+    public void valueChanged (ListSelectionEvent e) {
+    	if (!e.getValueIsAdjusting()) {
+    		reloadStudents();
+    	}
+    }
+    
     public static void main(String[] args) {
         // It's better to run a form in the separate thread
         // event-dispatching thread - EDT
@@ -186,6 +219,8 @@ public class StudentFrame extends JFrame {
             }
         });
     }
+
+	
 }
 
 class GroupPanel extends JPanel {
