@@ -91,7 +91,7 @@ public class StudentFrame extends JFrame {
         setBounds(100, 100, 600, 400);
     }
  
-    public static void main(String args[]) {
+    public static void main(String args) {
         // It's better to run a form in the separate thread
         // event-dispatching thread - EDT
         SwingUtilities.invokeLater(new Runnable() {
