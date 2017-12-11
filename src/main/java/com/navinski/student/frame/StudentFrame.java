@@ -2,6 +2,7 @@ package com.navinski.student.frame;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.swing.JLabel;
@@ -22,12 +23,12 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
 public class StudentFrame extends JFrame {
-	ManagementSystemImpl ms = ManagementSystemImpl.getInstance();
+	ManagementSystemImpl ms = null;
     private JList grpList;
     private JList stdList;
     private JSpinner spYear;
  
-    public StudentFrame() {
+    public StudentFrame() throws Exception {
         // Setting up layout for the whole client side form
         getContentPane().setLayout(new BorderLayout());
  
@@ -55,10 +56,23 @@ public class StudentFrame extends JFrame {
         left.setLayout(new BorderLayout());
         left.setBorder(new BevelBorder(BevelBorder.RAISED));
  
-        // Receiving a list of groups
-        Vector<Group> gr = new Vector<Group>(ms.getGroups());
-        // Creating a comment
-        left.add(new JLabel("Groups:"), BorderLayout.NORTH);
+//        // Receiving a list of groups
+//        Vector<Group> gr = new Vector<Group>(ms.getGroups());
+//        // Creating a comment
+//        left.add(new JLabel("Groups:"), BorderLayout.NORTH);
+        
+        // we need to handle exception on database request
+        Vector gr = null;
+        Vector st = null;
+        //gettin connection to the database
+        ms = ManagementSystemImpl.getInstance();
+        // receiving list of groups
+        gr = new Vector<Group>(ms.getGroups());
+        // receiving list of students
+        st = new Vector<Student>(ms.getAllStudents());
+        // creating label
+        left.add(new JLabel("Croups: "), BorderLayout.NORTH);
+        
         // Creating a display list and inserting it into the scroll
         // panel, which is being put on the left panel
         grpList = new JList(gr);
@@ -70,9 +84,10 @@ public class StudentFrame extends JFrame {
         right.setLayout(new BorderLayout());
         right.setBorder(new BevelBorder(BevelBorder.RAISED));
  
-        // Getting list of students
-        Vector<Student> st = new Vector<Student>(ms.getAllStudents());
-        // Creating a label description
+//        // Getting list of students
+//        Vector<Student> st = new Vector<Student>(ms.getAllStudents());
+//        // Creating a label description
+        
         right.add(new JLabel("Students:"), BorderLayout.NORTH);
         // Creating a visual list and inserting it into the scrollable panel
         // which is being placed on the right panel
@@ -91,14 +106,18 @@ public class StudentFrame extends JFrame {
         setBounds(100, 100, 600, 400);
     }
  
-    public static void main(String args) {
+    public static void main(String[] args) {
         // It's better to run a form in the separate thread
         // event-dispatching thread - EDT
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                StudentFrame sf = new StudentFrame();
-                sf.setDefaultCloseOperation(EXIT_ON_CLOSE);
-                sf.setVisible(true);
+            	try {
+	                StudentFrame sf = new StudentFrame();
+	                sf.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	                sf.setVisible(true);
+            	} catch (Exception ex) {
+            		ex.printStackTrace();
+            	}
             }
         });
     }

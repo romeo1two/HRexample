@@ -12,6 +12,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.sql.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
@@ -281,7 +282,7 @@ public class ManagementSystemImpl {
 		ResultSet rs = null;
 		try {
 			stmt = con.createStatement();
-			rs = stmt.executeQuery("SELECT group_id, groupName, curator, specialty FROM groups");
+			rs = stmt.executeQuery("SELECT group_id, groupName, curator, speciality FROM groups");
 			while (rs.next()) {
 				Group gr = new Group();
 				gr.setGroupId(rs.getInt(1));
@@ -373,78 +374,171 @@ public class ManagementSystemImpl {
 		return students;
 	}
 	
-	// Method for movin students from one group to another
-	public void moveStudentsToGroup (Group oldGroup, int oldYear, Group newGroup, int newYear) {
-		for(Student si : students) {
-			if(si.getGroupId() == oldGroup.getGroupId() && si.getEducationYear() == oldYear) {
-				si.setGroupId(newGroup.getGroupId());
-				si.setEducationYear(newYear);
+//	// Method for moving students from one group to another
+//	public void moveStudentsToGroup (Group oldGroup, int oldYear, Group newGroup, int newYear) {
+//		for(Student si : students) {
+//			if(si.getGroupId() == oldGroup.getGroupId() && si.getEducationYear() == oldYear) {
+//				si.setGroupId(newGroup.getGroupId());
+//				si.setEducationYear(newYear);
+//			}
+//		}
+//	}
+	
+	// Method for moving students from one group to another
+	public void moveStudentsToGroup (Group oldGroup, int oldYear, Group newGroup, int newYear) throws SQLException {
+		PreparedStatement stmt =null;
+		try {
+			stmt = con.prepareStatement(
+					"UPDATE students SET group_id=?, educationYear=? " +
+					"WHERE group_id? AND educationYear=?");
+			stmt.setInt(1, newGroup.getGroupId());
+			stmt.setInt(2,  newYear);
+			stmt.setInt(3, oldGroup.getGroupId());
+			stmt.setInt(4, oldYear);
+			stmt.execute();
+		} finally {
+			if (stmt != null) {
+				stmt.close();
 			}
 		}
 	}
+//	
+//	// Delete all the students from particular group
+//	public void removeStudentsFromGroup(Group group, int year) {
+//		// We will create a new list of student without those that needs to be deleted
+//		Collection<Student> tmp = new TreeSet<Student>();
+//		for(Student si : students) {
+//			if(si.getGroupId() != group.getGroupId() || si.getEducationYear() != year) {
+//				tmp.add(si);
+//			}
+//		}
+//		students = tmp;
+//	}
 	
 	// Delete all the students from particular group
-	public void removeStudentsFromGroup(Group group, int year) {
-		// We will create a new list of student without those that needs to be deleted
-		Collection<Student> tmp = new TreeSet<Student>();
-		for(Student si : students) {
-			if(si.getGroupId() != group.getGroupId() || si.getEducationYear() != year) {
-				tmp.add(si);
+		public void removeStudentsFromGroup(Group group, int year) throws SQLException {
+			PreparedStatement stmt =null;
+			try {
+				stmt = con.prepareStatement(
+						"DELETE FROM students WHERE group_id=? AND educationYear=?");
+				stmt.setInt(1, group.getGroupId());
+				stmt.setInt(2,  year);
+				stmt.execute();
+			} finally {
+				if (stmt != null) {
+					stmt.close();
+				}
 			}
 		}
-		students = tmp;
-	}
+	
+//	// Method for adding new student
+//	public void insertStudent(Student student){
+//		// adding new Student object to the collection
+//		students.add(student);
+//	}
 	
 	// Method for adding new student
-	public void insertStudent(Student student){
-		// adding new Student object to the collection
-		students.add(student);
-	}
+		public void insertStudent(Student student) throws SQLException {
+			PreparedStatement stmt = null;
+			try {
+				stmt = con.prepareStatement(
+						"INSERT INTO studenta " +
+						"(firstName, patronymic, surName, sex, dateOfBirth, group_id, educationYear " +
+						"VALUES (?, ?, ?, ?, ?, ?, ?");
+				stmt.setString(1, student.getFirstName());
+				stmt.setString(2, student.getPatronymic());
+				stmt.setString(3, student.getSurName());
+				stmt.setString(4, new String(new char[] {student.getSex()}));
+				stmt.setDate(5, new Date(student.getDateOfBirth().getTime()));
+				stmt.setInt(6, student.getGroupId());
+				stmt.setInt(7, student.getEducationYear());
+				stmt.execute();
+			} finally {
+				if (stmt != null) {
+					stmt.close();
+				}
+			}
+		}
+	
+//	// Update info about student
+//	public void updateStudent(Student student) {
+//		// We need to find particular student by ID
+//		Student updStudent = null;
+//		for (Student si : students) {
+//			if (si.getStudentId() == student.getStudentId()) {
+//				updStudent = si;
+//				break;
+//			}
+//		}
+//		updStudent.setFirstName(student.getFirstName());
+//		updStudent.setPatronymic(student.getPatronymic());
+//		updStudent.setSurName(student.getSurName());
+//		updStudent.setSex(student.getSex());
+//		updStudent.setDateOfBirth(student.getDateOfBirth());
+//		updStudent.setGroupId(student.getGroupId());
+//		updStudent.setEducationYear(student.getEducationYear());
+//	}
 	
 	// Update info about student
-	public void updateStudent(Student student) {
-		// We need to find particular student by ID
-		Student updStudent = null;
-		for (Student si : students) {
-			if (si.getStudentId() == student.getStudentId()) {
-				updStudent = si;
-				break;
+		public void updateStudent(Student student) throws SQLException {
+			PreparedStatement stmt = null;
+			try { stmt =con.prepareStatement(
+					"UPDATE students SET " +
+					"firstName=?, patronymic=?, surName=?, " +
+					"sex=?, dateOfBirth=?, group_id=?, educationYear=? " +
+					"WHERE studet_id=?");
+			stmt.setString(1, student.getFirstName());
+			stmt.setString(2, student.getPatronymic());
+			stmt.setString(3, student.getSurName());
+			stmt.setString(4, new String(new char[] {student.getSex()}));
+			stmt.setDate(5, new Date(student.getDateOfBirth().getTime()));
+			stmt.setInt(6, student.getGroupId());
+			stmt.setInt(7, student.getEducationYear());
+			stmt.setInt(8, student.getStudentId());
+			stmt.execute();
+			} finally {
+				if( stmt != null) stmt.close();
 			}
 		}
-		updStudent.setFirstName(student.getFirstName());
-		updStudent.setPatronymic(student.getPatronymic());
-		updStudent.setSurName(student.getSurName());
-		updStudent.setSex(student.getSex());
-		updStudent.setDateOfBirth(student.getDateOfBirth());
-		updStudent.setGroupId(student.getGroupId());
-		updStudent.setEducationYear(student.getEducationYear());
-	}
+	
+//	// Delete student
+//	public void deleteStudent(Student student) {
+//		// first we nedd to find particular student
+//		Student delStudent = null;
+//		for (Student si : students) {
+//			if (si.getStudentId() == student.getStudentId()) {
+//				// once match found - student need to be reasigned and loop terminated
+//				delStudent = si;
+//				break;
+//			}
+//		}
+//		students.remove(delStudent);
+//	}
 	
 	// Delete student
-	public void deleteStudent(Student student) {
-		// first we nedd to find particular student
-		Student delStudent = null;
-		for (Student si : students) {
-			if (si.getStudentId() == student.getStudentId()) {
-				// once match found - student need to be reasigned and loop terminated
-				delStudent = si;
-				break;
+		public void deleteStudent(Student student) throws SQLException {
+			PreparedStatement stmt = null;
+			try {
+				stmt = con.prepareStatement(
+						"DELETE FROM students WHERE student_id=?");
+				stmt.setInt(1, student.getStudentId());
+				stmt.execute();
+			} finally {
+				if(stmt != null) stmt.close();
 			}
 		}
-		students.remove(delStudent);
-	}
 	
-	public static void printString(Object s) {
-		try {
-			System.out.println(new String(s.toString().getBytes("windows-1251"), "windows-1252"));
-		} catch (UnsupportedEncodingException ex) {
-			ex.printStackTrace();
-		}
-	}
-	
-	public static void printString() {
-		System.out.println();
-	}
-	
-	
+//	public static void printString(Object s) {
+//		try {
+//			System.out.println(new String(s.toString().getBytes("windows-1251"), "windows-1252"));
+//		} catch (UnsupportedEncodingException ex) {
+//			ex.printStackTrace();
+//		}
+//	}
+//	
+//	public static void printString() {
+//		System.out.println();
+//	}
+//	
+//	
 }
