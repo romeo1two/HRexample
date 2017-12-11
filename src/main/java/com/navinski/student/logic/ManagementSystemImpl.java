@@ -3,6 +3,11 @@ package com.navinski.student.logic;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,22 +16,36 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 
+import java.sql.PreparedStatement;
+
 public class ManagementSystemImpl {
-	private List<Group> groups;
-	private Collection<Student> students;
+//	private List<Group> groups;
+//	private Collection<Student> students;
 	
+	private static Connection con;
+		
 	// variable for singleton pattern template
 	private static ManagementSystemImpl instance;
 	
 	// private access Constructor
-	private ManagementSystemImpl(){
-		loadGroups();
-		loadStudents();
+	private ManagementSystemImpl() throws Exception {
+//		loadGroups();
+//		loadStudents();
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost:3306/students?autoReconnect=true&useSSL=false";
+			con = DriverManager.getConnection(url, "root", "R!omeo1two");
+		} catch (ClassNotFoundException e) {
+			throw new Exception(e);
+		} catch (SQLException e) {
+			throw new Exception(e);
+		}
 	}
 	
 	// Method will verify if the static variable has been initialized before
 	// in case it has not? it will initialize it and return the result
-	public static synchronized ManagementSystemImpl getInstance() {
+	public static synchronized ManagementSystemImpl getInstance() throws Exception {
 		if(instance == null) {
 			instance = new ManagementSystemImpl();
 		}
@@ -166,114 +185,192 @@ public class ManagementSystemImpl {
 	
 	
 	
-	// Method that creates 2 different groups and puts it into the list collection
-	public void loadGroups() {
-		// Verify if the list is not created yet
-		if (groups == null) {
-			groups = new ArrayList<Group>();
-		} else {
-			groups.clear();
-		}
-		Group g = null;
-		
-		g = new Group();
-		g.setGroupId(1);
-		g.setNameGroup("FirstGroup");
-		g.setCurator("Sergei Ivanich");
-		g.setSpeciality("Mathematics");
-		groups.add(g);
-		
-		g = new Group();
-		g.setGroupId(2);
-		g.setNameGroup("SecondGroup");
-		g.setCurator("Vasili Petrovich");
-		g.setSpeciality("Phisics");
-		groups.add(g);
-	}
-	
-	// Method that creates several students and puts them into the collection
-	public void loadStudents() {
-		if (students == null) {
-			// in this case we will use collection that sorts its entryes
-			students = new TreeSet<Student>();
-		} else {
-			students.clear();
-		}
-		
-		Student s = null;
-		Calendar c = Calendar.getInstance();
-		
-		// Second group
-		s = new Student();
-		s.setStudentId(1);
-		s.setFirstName("Vasili");
-		s.setPatronymic("M");
-		s.setSurName("Ivanov");
-		s.setSex('m');
-		c.set(1990, 3, 20);
-		s.setDateOfBirth(c.getTime());
-		s.setGroupId(2);
-		s.setEducationYear(2006);
-		students.add(s);
-		
-		s = new Student();
-        s.setStudentId(2);
-        s.setFirstName("Natalia");
-        s.setPatronymic("A");
-        s.setSurName("Semenova");
-        s.setSex('f');
-        c.set(1990, 6, 10);
-        s.setDateOfBirth(c.getTime());
-        s.setGroupId(2);
-        s.setEducationYear(2006);
-        students.add(s);
-        
-     // first group
-     	s = new Student();
-     	s.setStudentId(3);
-     	s.setFirstName("Maxim");
-     	s.setPatronymic("P");
-     	s.setSurName("Zaebalov");
-     	s.setSex('m');
-     	c.set(1990, 5, 25);
-     	s.setDateOfBirth(c.getTime());
-     	s.setGroupId(1);
-     	s.setEducationYear(2006);
-     	students.add(s);
-     		
-     	s = new Student();
-        s.setStudentId(4);
-        s.setFirstName("Marina");
-        s.setPatronymic("A");
-        s.setSurName("Krasotkina");
-        s.setSex('f');
-        c.set(1990, 7, 11);
-        s.setDateOfBirth(c.getTime());
-        s.setGroupId(1);
-        s.setEducationYear(2006);
-        students.add(s);
-	}
+//	// Method that creates 2 different groups and puts it into the list collection
+//	public void loadGroups() {
+//		// Verify if the list is not created yet
+//		if (groups == null) {
+//			groups = new ArrayList<Group>();
+//		} else {
+//			groups.clear();
+//		}
+//		Group g = null;
+//		
+//		g = new Group();
+//		g.setGroupId(1);
+//		g.setNameGroup("FirstGroup");
+//		g.setCurator("Sergei Ivanich");
+//		g.setSpeciality("Mathematics");
+//		groups.add(g);
+//		
+//		g = new Group();
+//		g.setGroupId(2);
+//		g.setNameGroup("SecondGroup");
+//		g.setCurator("Vasili Petrovich");
+//		g.setSpeciality("Phisics");
+//		groups.add(g);
+//	}
+//	
+//	// Method that creates several students and puts them into the collection
+//	public void loadStudents() {
+//		if (students == null) {
+//			// in this case we will use collection that sorts its entryes
+//			students = new TreeSet<Student>();
+//		} else {
+//			students.clear();
+//		}
+//		
+//		Student s = null;
+//		Calendar c = Calendar.getInstance();
+//		
+//		// Second group
+//		s = new Student();
+//		s.setStudentId(1);
+//		s.setFirstName("Vasili");
+//		s.setPatronymic("M");
+//		s.setSurName("Ivanov");
+//		s.setSex('m');
+//		c.set(1990, 3, 20);
+//		s.setDateOfBirth(c.getTime());
+//		s.setGroupId(2);
+//		s.setEducationYear(2006);
+//		students.add(s);
+//		
+//		s = new Student();
+//        s.setStudentId(2);
+//        s.setFirstName("Natalia");
+//        s.setPatronymic("A");
+//        s.setSurName("Semenova");
+//        s.setSex('f');
+//        c.set(1990, 6, 10);
+//        s.setDateOfBirth(c.getTime());
+//        s.setGroupId(2);
+//        s.setEducationYear(2006);
+//        students.add(s);
+//        
+//     // first group
+//     	s = new Student();
+//     	s.setStudentId(3);
+//     	s.setFirstName("Maxim");
+//     	s.setPatronymic("P");
+//     	s.setSurName("Zaebalov");
+//     	s.setSex('m');
+//     	c.set(1990, 5, 25);
+//     	s.setDateOfBirth(c.getTime());
+//     	s.setGroupId(1);
+//     	s.setEducationYear(2006);
+//     	students.add(s);
+//     		
+//     	s = new Student();
+//        s.setStudentId(4);
+//        s.setFirstName("Marina");
+//        s.setPatronymic("A");
+//        s.setSurName("Krasotkina");
+//        s.setSex('f');
+//        c.set(1990, 7, 11);
+//        s.setDateOfBirth(c.getTime());
+//        s.setGroupId(1);
+//        s.setEducationYear(2006);
+//        students.add(s);
+//	}
 	
 	// Method for getting list of groups
-	public List<Group> getGroups(){
+	public List<Group> getGroups() throws SQLException {
+		List<Group> groups = new ArrayList<Group>();
+		
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery("SELECT group_id, groupName, curator, specialty FROM groups");
+			while (rs.next()) {
+				Group gr = new Group();
+				gr.setGroupId(rs.getInt(1));
+				gr.setNameGroup(rs.getString(2));
+				gr.setCurator(rs.getString(3));
+				gr.setSpeciality(rs.getString(4));
+				
+				groups.add(gr);
+			}
+		} finally {
+			if (rs != null) {
+				rs.close();
+			}
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		
 		return groups;
 	}
 	
 	// Method for getting list of all Students
 	
-	public Collection<Student> getAllStudents(){
+	public Collection<Student> getAllStudents() throws SQLException {
+		Collection<Student> students = new ArrayList<Student>();
+		
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(
+					"SELECT student_id, firstName, patronymic, surName," +
+					"sex, dateOfBirth, group_id, educationYear FROM students " +
+					"ORDER BY surName, firstName, patronymic");
+			while (rs.next()) {
+				Student st = new Student(rs);
+				students.add(st);
+			}
+		} finally {
+			if (rs != null) {
+				rs.close();
+			}
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		
 		return students;
 	}
 	
 	// Method for getting list of Students for particular group
-	public Collection<Student> getStudentsFromGroup (Group group, int year) {
-		Collection<Student> l = new TreeSet<Student>();
-		for (Student si : students) {
-			if (si.getGroupId() == group.getGroupId() && si.getEducationYear() == year) {
-				l.add(si);
+//	public Collection<Student> getStudentsFromGroup (Group group, int year) {
+//		Collection<Student> l = new TreeSet<Student>();
+//		for (Student si : students) {
+//			if (si.getGroupId() == group.getGroupId() && si.getEducationYear() == year) {
+//				l.add(si);
+//			}
+//		}
+//		return l;
+//	}
+	
+	public Collection<Student> getStudentsFromGroup (Group group, int year) throws SQLException{
+		Collection<Student> students = new ArrayList<Student>();
+		
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = con.prepareStatement(
+					"SELECT student_id, firstName, patronymic, sureName, " +
+					"sex, dateOfBorth, group_id, educationYear FROM students" +
+					"WHERE group_id=? AND educationYear=? " +
+					"ORDER BY surName, firstName, patronymic");
+			stmt.setInt(1,  group.getGroupId());
+			stmt.setInt(2,  year);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				Student st = new Student(rs);
+				students.add(st);
+			}
+		} finally {
+			if (rs != null) {
+				rs.close();
+			}
+			if (stmt != null) {
+				stmt.close();
 			}
 		}
-		return l;
+		
+		return students;
 	}
 	
 	// Method for movin students from one group to another

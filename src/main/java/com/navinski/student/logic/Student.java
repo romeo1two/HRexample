@@ -1,5 +1,7 @@
 package com.navinski.student.logic;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.Collator;
 import java.util.Date;
 import java.util.Locale;
@@ -21,6 +23,18 @@ public class Student implements Comparable {
     private int groupId;
     // variable education year
     private int educationYear;
+    
+    // constructor gets data from database
+    public Student(ResultSet rs) throws SQLException {
+    	setStudentId(rs.getInt(1));
+    	setFirstName(rs.getString(2));
+    	setPatronymic(rs.getString(3));
+    	setSurName(rs.getString(4));
+    	setSex(rs.getString(5).charAt(0));
+    	setDateOfBirth(rs.getDate(6));
+    	setGroupId(rs.getInt(7));
+    	setEducationYear(rs.getInt(8));
+    }
     
     // get or set Student ID
 	public int getStudentId() {

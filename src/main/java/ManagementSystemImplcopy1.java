@@ -1,4 +1,4 @@
-package com.navinski.student.logic;
+
 
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
@@ -10,6 +10,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
+
+import com.navinski.student.logic.Group;
+import com.navinski.student.logic.Student;
 
 public class ManagementSystemImplcopy1 {
 	private List<Group> groups;
@@ -204,7 +207,7 @@ public class ManagementSystemImplcopy1 {
 		Calendar c = Calendar.getInstance();
 		
 		// Second group
-		s = new Student();
+//		s = new Student();
 		s.setStudentId(1);
 		s.setFirstName("Vasili");
 		s.setPatronymic("M");
@@ -216,7 +219,7 @@ public class ManagementSystemImplcopy1 {
 		s.setEducationYear(2006);
 		students.add(s);
 		
-		s = new Student();
+//		s = new Student();
         s.setStudentId(2);
         s.setFirstName("Natalia");
         s.setPatronymic("A");
@@ -229,7 +232,7 @@ public class ManagementSystemImplcopy1 {
         students.add(s);
         
      // first group
-     	s = new Student();
+//     	s = new Student();
      	s.setStudentId(3);
      	s.setFirstName("Maxim");
      	s.setPatronymic("P");
@@ -241,7 +244,7 @@ public class ManagementSystemImplcopy1 {
      	s.setEducationYear(2006);
      	students.add(s);
      		
-     	s = new Student();
+//     	s = new Student();
         s.setStudentId(4);
         s.setFirstName("Marina");
         s.setPatronymic("A");

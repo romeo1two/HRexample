@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 public class TestJDBC {
 
-	public static void main(String[] args) {
+	public static void main(String args) {
 		try {
 			System.setOut(new PrintStream("out.txt"));
 		} catch (FileNotFoundException ex) {
