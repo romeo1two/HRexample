@@ -18,6 +18,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -27,6 +28,8 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ListSelectionEvent;
 
 import com.navinski.student.logic.Group;
 import com.navinski.student.logic.ManagementSystemImpl;
@@ -202,6 +205,38 @@ public class StudentFrame extends JFrame implements ActionListener {
     	if (!e.getValueIsAdjusting()) {
     		reloadStudents();
     	}
+    }
+    
+    public void stateChamged (ChangeEvent e) {
+    	reloadStudents();
+    }
+    
+    private void reloadStudents() {
+    	JOptionPane.showMessageDialog(this, "reloadStudents");
+    }
+    
+    private void moveGroup() {
+    	JOptionPane.showMessageDialog(this, "moveGroup");
+    }
+    
+    private void clearGroup() {
+    	JOptionPane.showMessageDialog(this, "clearGroup");
+    }
+    
+    private void insertStudent() {
+    	JOptionPane.showMessageDialog(this, "insertStudent");
+    }
+    
+    private void updateStudent() {
+    	JOptionPane.showMessageDialog(this, "updateStudent");
+    }
+    
+    private void deleteStudent() {
+    	JOptionPane.showMessageDialog(this,  "deleteStudent");
+    }
+    
+    private void showAllStudents() {
+    	JOptionPane.showMessageDialog(this,  "showAllStudents");
     }
     
     public static void main(String[] args) {
