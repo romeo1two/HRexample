@@ -209,8 +209,8 @@ public class StudentFrame extends JFrame implements ActionListener {
     	}
     }
     
-    private void reloadStudents() {
-        // Creating anonimouse class for the thread
+    public void reloadStudents() {
+        // Creating anonymous class for the thread
         Thread t = new Thread() {
             // Overriding method run
             public void run() {
@@ -236,7 +236,7 @@ public class StudentFrame extends JFrame implements ActionListener {
             }
             // End of our method run
         };
-        // End of anonimouse class
+        // End of anonymous class
  
         // End now we are starting our thread
         t.start();
@@ -251,26 +251,53 @@ public class StudentFrame extends JFrame implements ActionListener {
 //    }
 //    
     private void moveGroup() {
-    	JOptionPane.showMessageDialog(this, "moveGroup");
+        Thread t = new Thread() {
+            public void run() {
+                // if group is not selected - exit
+                if (grpList.getSelectedValue() == null) {
+                    return;
+                }
+                try {
+                    // receiving selected group
+                    Group g = (Group) grpList.getSelectedValue();
+                    // receiving the number from spinner
+                    int y = ((SpinnerNumberModel) spYear.getModel()).getNumber().intValue();
+                    // creating new dialog
+                    GroupDialog gd = new GroupDialog(y, ms.getGroups());
+                    // setting its modality mode
+                    gd.setModal(true);
+                    // Displaying dialog
+                    gd.setVisible(true);
+                    // If OK button pressed - moving to the new group
+                    if (gd.getResult()) {
+                        ms.moveStudentsToGroup(g, y, gd.getGroup(), gd.getYear());
+                        reloadStudents();
+                    }
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(StudentFrame.this, e.getMessage());
+                }
+            }
+        };
+        t.start();
     }
     
     // method for clearing group
     private void clearGroup() {
         Thread t = new Thread() {
             public void run() {
-                // checking - if group selected
+                // 
                 if (grpList.getSelectedValue() != null) {
                     if (JOptionPane.showConfirmDialog(StudentFrame.this,
-                            "Do you wanna delete student from the group?", "Deleting students",
+                            "Do you wann delete students from the group?", "Deleting students",
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                        // receiving selected group
+                        // 
                         Group g = (Group) grpList.getSelectedValue();
-                        // receiving the number from spinner
+                        // 
                         int y = ((SpinnerNumberModel) spYear.getModel()).getNumber().intValue();
                         try {
-                            // deleting students from the group
+                            // 
                             ms.removeStudentsFromGroup(g, y);
-                            // reloading list of students
+                            // 
                             reloadStudents();
                         } catch (SQLException e) {
                             JOptionPane.showMessageDialog(StudentFrame.this, e.getMessage());

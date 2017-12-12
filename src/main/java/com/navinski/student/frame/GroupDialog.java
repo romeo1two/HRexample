@@ -124,6 +124,10 @@ public class GroupDialog extends JDialog implements ActionListener {
 		return null;
 	}
 
+	public boolean getResult() {
+		return result;
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		JButton src = (JButton) e.getSource();
 		if (src.getName().equals("OK")) {
@@ -135,6 +139,8 @@ public class GroupDialog extends JDialog implements ActionListener {
 		setVisible(false);
 		
 	}
+
+	
 	
 	
 }

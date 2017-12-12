@@ -24,6 +24,10 @@ public class Student implements Comparable {
     // variable education year
     private int educationYear;
     
+    public Student() {
+    	
+    }
+    
     // constructor gets data from database
     public Student(ResultSet rs) throws SQLException {
     	setStudentId(rs.getInt(1));
