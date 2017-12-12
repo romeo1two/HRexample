@@ -1,6 +1,7 @@
 package com.navinski.student.frame;
 
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Vector;
  
 import java.awt.Dimension;
@@ -33,6 +34,7 @@ import javax.swing.event.ListSelectionEvent;
 
 import com.navinski.student.logic.Group;
 import com.navinski.student.logic.ManagementSystemImpl;
+import com.navinski.student.logic.Student;
 
 public class StudentFrame extends JFrame implements ActionListener {
 	//lets create buttons names - which will be used later
@@ -207,20 +209,77 @@ public class StudentFrame extends JFrame implements ActionListener {
     	}
     }
     
-    public void stateChamged (ChangeEvent e) {
+    private void reloadStudents() {
+        // Creating anonimouse class for the thread
+        Thread t = new Thread() {
+            // Overriding method run
+            public void run() {
+                if (stdList != null) {
+                    // receiving selected group
+                    Group g = (Group) grpList.getSelectedValue();
+                    // receiving the number from spinner
+                    int y = ((SpinnerNumberModel) spYear.getModel()).getNumber().intValue();
+                    try {
+                        // receiving list of students
+                        Collection<Student> s = ms.getStudentsFromGroup(g, y);
+                        // and setting up the model for table with new data
+                        stdList.setModel(new StudentTableModel(new Vector<Student>(s)));
+                    } catch (SQLException e) {
+                        JOptionPane.showMessageDialog(StudentFrame.this, e.getMessage());
+                    }
+                }
+                // creating delay for 3 seconds
+                try {
+                    Thread.sleep(3000);
+                } catch (Exception e) {
+                }
+            }
+            // End of our method run
+        };
+        // End of anonimouse class
+ 
+        // End now we are starting our thread
+        t.start();
+    }
+    
+    public void stateChanged (ChangeEvent e) {
     	reloadStudents();
     }
     
-    private void reloadStudents() {
-    	JOptionPane.showMessageDialog(this, "reloadStudents");
-    }
-    
+//    private void reloadStudents() {
+//    	JOptionPane.showMessageDialog(this, "reloadStudents");
+//    }
+//    
     private void moveGroup() {
     	JOptionPane.showMessageDialog(this, "moveGroup");
     }
     
+    // method for clearing group
     private void clearGroup() {
-    	JOptionPane.showMessageDialog(this, "clearGroup");
+        Thread t = new Thread() {
+            public void run() {
+                // checking - if group selected
+                if (grpList.getSelectedValue() != null) {
+                    if (JOptionPane.showConfirmDialog(StudentFrame.this,
+                            "Do you wanna delete student from the group?", "Deleting students",
+                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        // receiving selected group
+                        Group g = (Group) grpList.getSelectedValue();
+                        // receiving the number from spinner
+                        int y = ((SpinnerNumberModel) spYear.getModel()).getNumber().intValue();
+                        try {
+                            // deleting students from the group
+                            ms.removeStudentsFromGroup(g, y);
+                            // reloading list of students
+                            reloadStudents();
+                        } catch (SQLException e) {
+                            JOptionPane.showMessageDialog(StudentFrame.this, e.getMessage());
+                        }
+                    }
+                }
+            }
+        };
+        t.start();
     }
     
     private void insertStudent() {
@@ -231,8 +290,34 @@ public class StudentFrame extends JFrame implements ActionListener {
     	JOptionPane.showMessageDialog(this, "updateStudent");
     }
     
+    // method for deleting a student
     private void deleteStudent() {
-    	JOptionPane.showMessageDialog(this,  "deleteStudent");
+        Thread t = new Thread() {
+            public void run() {
+                if (stdList != null) {
+                    StudentTableModel stm = (StudentTableModel) stdList.getModel();
+                    // check - if any student has been selected
+                    if (stdList.getSelectedRow() >= 0) {
+                        if (JOptionPane.showConfirmDialog(StudentFrame.this,
+                                "Do you want to delete a student?", "Deleting of the student",
+                                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                            // here we will need method getStudent(int rowIndex)
+                            Student s = stm.getStudent(stdList.getSelectedRow());
+                            try {
+                                ms.deleteStudent(s);
+                                reloadStudents();
+                            } catch (SQLException e) {
+                                JOptionPane.showMessageDialog(StudentFrame.this, e.getMessage());
+                            }
+                        }
+                    } // if student not selected let the user know that it is required
+                    else {
+                        JOptionPane.showMessageDialog(StudentFrame.this, "Required to select a student in the list");
+                    }
+                }
+            }
+        };
+        t.start();
     }
     
     private void showAllStudents() {
