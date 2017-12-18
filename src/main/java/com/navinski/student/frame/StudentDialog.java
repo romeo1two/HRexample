@@ -23,8 +23,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
- 
-import com.navinski.student.logic.Group;
+
+import com.navinski.student.entity.Groups;
 import com.navinski.student.logic.ManagementSystemImpl;
 import com.navinski.student.logic.Student;
  
@@ -50,7 +50,7 @@ public class StudentDialog extends JDialog implements ActionListener {
     private JComboBox groupList;
  
     // 
-    public StudentDialog(List<Group> groups, boolean newStudent, StudentFrame owner) {
+    public StudentDialog(List<Groups> groups, boolean newStudent, StudentFrame owner) {
         // 
         // 
         this.owner = owner;
@@ -58,7 +58,7 @@ public class StudentDialog extends JDialog implements ActionListener {
         setTitle("Editing student data");
         getContentPane().setLayout(new FlowLayout());
  
-        groupList = new JComboBox(new Vector<Group>(groups));
+        groupList = new JComboBox(new Vector<Groups>(groups));
  
         JRadioButton m = new JRadioButton("men");
         JRadioButton w = new JRadioButton("fem");
@@ -163,7 +163,7 @@ public class StudentDialog extends JDialog implements ActionListener {
         }
         year.getModel().setValue(new Integer(st.getEducationYear()));
         for (int i = 0; i < groupList.getModel().getSize(); i++) {
-            Group g = (Group) groupList.getModel().getElementAt(i);
+            Groups g = (Groups) groupList.getModel().getElementAt(i);
             if (g.getGroupId() == st.getGroupId()) {
                 groupList.setSelectedIndex(i);
                 break;
@@ -188,7 +188,7 @@ public class StudentDialog extends JDialog implements ActionListener {
         }
         int y = ((SpinnerNumberModel) year.getModel()).getNumber().intValue();
         st.setEducationYear(y);
-        st.setGroupId(((Group) groupList.getSelectedItem()).getGroupId());
+        st.setGroupId(((Groups) groupList.getSelectedItem()).getGroupId());
         return st;
     }
  
