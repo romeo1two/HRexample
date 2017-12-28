@@ -40,7 +40,7 @@ public class StudentFrameServlet extends HttpServlet {
 			} catch (ParseException p_e){
 				throw new IOException(p_e.getMessage());
 			}
-		}
+		} // some more comments for student services
 		String gs = req.getParameter("groupId");
 		String ys = req.getParameter("educationYear");
 		int groupId = -1;
