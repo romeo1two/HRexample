@@ -32,7 +32,7 @@ public class StudentForm {
 		}
 		this.groupId = st.getGroupId();
 		this.educationYear = st.getEducationYear();
-	}
+	} // some more descroption
 	
 	public String getDateOfBirth() {
 		return dateOfBirth;
