@@ -51,7 +51,7 @@ public class StudentFrameServlet extends HttpServlet {
 		if (ys != null) {
 			year = Integer.parseInt(ys);
 		}
-		// some more changes confiremed
+		// some more changes NOT
 		
 		MainFrameForm form = new MainFrameForm();
 		List<Groups> groups = ms.getGroupsList();
