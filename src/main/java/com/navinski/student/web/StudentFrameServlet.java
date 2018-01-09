@@ -52,7 +52,7 @@ public class StudentFrameServlet extends HttpServlet {
 			year = Integer.parseInt(ys);
 		}
 		// some more changes NOT
-		// changes #2 has been maid
+		// 
 		
 		MainFrameForm form = new MainFrameForm();
 		List<Groups> groups = ms.getGroupsList();
