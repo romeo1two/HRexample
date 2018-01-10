@@ -10,6 +10,7 @@ public class MainFrameForm {
 	public int getYear() {
 		return year;
 	}
+	// this method need to be updated later
 	public void setYear(int year) {
 		this.year = year;
 	}
