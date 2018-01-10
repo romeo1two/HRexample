@@ -33,7 +33,7 @@ public class StudentForm {
 		this.groupId = st.getGroupId();
 		this.educationYear = st.getEducationYear();
 	} // no new descriptions available for now
-	// new description added
+	// some new description of new method
 	
 	public String getDateOfBirth() {
 		return dateOfBirth;
