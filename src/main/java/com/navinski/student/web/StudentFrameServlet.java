@@ -51,7 +51,7 @@ public class StudentFrameServlet extends HttpServlet {
 		if (ys != null) {
 			year = Integer.parseInt(ys);
 		}
-		// some more changes NOT
+		// no new changes for today
 		// 
 		
 		MainFrameForm form = new MainFrameForm();
