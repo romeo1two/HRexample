@@ -53,6 +53,7 @@ public class StudentForm {
 	public int getGroupId() {
 		return groupId;
 	}
+	// comments set to describe a new method
 	public void setGroupId() {
 		this.groupId=groupId;
 	}
