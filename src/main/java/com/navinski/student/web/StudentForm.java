@@ -49,11 +49,12 @@ public class StudentForm {
 		this.educationYear = educationYear;
 	}
 	// comments for this method at new place
-	// comment #42
+	// comment #43
 	public int getGroupId() {
 		return groupId;
 	}
 	// comments set to describe a new method
+	// new description added today
 	public void setGroupId() {
 		this.groupId=groupId;
 	}
