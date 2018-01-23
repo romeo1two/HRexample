@@ -48,9 +48,9 @@ public class StudentForm {
 	public void setEducationYear(int educationYear) {
 		this.educationYear = educationYear;
 	}
-	// comments for
-	// comment #46
-	// or some 
+	// comments for new line
+	// comment #47
+	// or some other comments
 	public int getGroupId() {
 		return groupId;
 	}
