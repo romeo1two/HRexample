@@ -50,7 +50,7 @@ public class StudentForm {
 	}
 	// comments for old line here today
 	// comment #55
-	// or some other comments for documents
+	// or some other comments for documents right here
 	
 	public int getGroupId() {
 		return groupId;
