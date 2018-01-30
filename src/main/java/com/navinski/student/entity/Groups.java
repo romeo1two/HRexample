@@ -1,5 +1,7 @@
 package com.navinski.student.entity;
 
+// some new comments for a new commit #60
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
