@@ -34,7 +34,7 @@ public class GroupDialog extends JDialog implements ActionListener {
 		setTitle("Moving the group");
 		
 		//some new comment
-		//Creating complicated layout comlited
+		//Creating complicated layout
 		GridBagLayout gbl = new GridBagLayout();
 		setLayout(gbl);
 		// creating variable for setting up location rules
