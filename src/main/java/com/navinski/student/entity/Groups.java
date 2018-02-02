@@ -1,7 +1,7 @@
 package com.navinski.student.entity;
 
-// some new text for a new commit #64
-//extra text for a new commit 
+// some new text for a new commit #65
+//extra text for a new commit around
 
 import java.io.Serializable;
 
