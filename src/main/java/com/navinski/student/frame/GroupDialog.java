@@ -21,7 +21,7 @@ import com.navinski.student.logic.Group;
 
 public class GroupDialog extends JDialog implements ActionListener {
 	
-	private static final int D_HEIGHT = 150; // visota
+	private static final int D_HEIGHT = 150; // visota +1
 	private final static int D_WIDTH = 200; // shirina
 	private JSpinner spYear;
 	private JComboBox groupList;
