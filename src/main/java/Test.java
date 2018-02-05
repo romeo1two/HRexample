@@ -7,9 +7,9 @@ public class Test {
         TestClass<A> test2 = new TestClass<A>();
         TestClass<B> test3 = new TestClass<B>();
         // CountObject - static property in class TestClass 
-        System.out.println("Test1: " + test1.CountObject); // 2
-        System.out.println("Test2: " + test2.CountObject); // 1
-        System.out.println("Test3: " + test3.CountObject);
+        System.out.println("Test1: " + TestClass.CountObject); // 2
+        System.out.println("Test2: " + TestClass.CountObject); // 1
+        System.out.println("Test3: " + TestClass.CountObject);
 	
 	}
 }
@@ -24,18 +24,21 @@ class TestClass<T> {
 }
 
 class A {
+	public static int CountObject =  5;
+	
 	public void Display()
 	{
-		System.out.println("Test2");
+		System.out.println("Class A description");
 	}
 }
 
-class B extends A
-{
+class B extends A {
+	public static int CountObject =  10;
+	
 	@Override
 	public void Display()
 	{
-		System.out.println("New value");
+		System.out.println("Class B description");
 	}
 }
 
