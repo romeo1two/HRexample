@@ -6,39 +6,55 @@ public class Test {
 		TestClass<A> test1 = new TestClass<A>();
         TestClass<A> test2 = new TestClass<A>();
         TestClass<B> test3 = new TestClass<B>();
+        
+        Box<A> test4 = new Box<A>();
+        Box<B> test5 = new Box<B>();
         // CountObject - static property in class TestClass 
-        System.out.println("Test1: " + TestClass.CountObject); // 2
-        System.out.println("Test2: " + TestClass.CountObject); // 1
-        System.out.println("Test3: " + TestClass.CountObject);
+        System.out.println("Test1: " + TestClass.countObject); // 2
+        System.out.println("Test2: " + TestClass.countObject); // 1
+        System.out.println("Test3: " + TestClass.countObject);
 	
 	}
 }
 
+// create new generic class BOX
+// add some more description on T
+
+class Box<T> {
+	// T stands for "Type"
+	private T t;
+	
+	public void set(T t) { this.t = t; }
+	public T get() { return t; }
+}
+
 class TestClass<T> {
-	public static int CountObject =  0;
+	private T t ;
+	
+	public static int countObject =  0;
 	
 	public TestClass()
 	{
-	    CountObject++;
+	    countObject++;
 	}
 }
 
 class A {
-	public static int CountObject =  5;
+	public static int countObject =  5;
 	
 	public void Display()
 	{
-		System.out.println("Class A description");
+		System.out.println("From A");
 	}
 }
 
 class B extends A {
-	public static int CountObject =  10;
+	public static int countObject =  10;
 	
 	@Override
 	public void Display()
 	{
-		System.out.println("Class B description");
+		System.out.println("From B");
 	}
 }
 
