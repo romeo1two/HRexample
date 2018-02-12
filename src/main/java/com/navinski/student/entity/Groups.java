@@ -1,10 +1,10 @@
 package com.navinski.student.entity;
 
-// some new text for a new commit #71-2
+// some new text for a new commit #71-3
 
 // some text
 // additional info
-// improvements series
+// 
 
 import java.io.Serializable;
 
