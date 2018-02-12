@@ -7,9 +7,11 @@ public class Test {
         TestClass<A> test2 = new TestClass<A>();
         TestClass<B> test3 = new TestClass<B>();
         
+        // Box class declaration and initialization
         Box<A> test4 = new Box<A>();
         Box<B> test5 = new Box<B>();
-        // CountObject - static property in class TestClass 
+        // 
+        // Print results
         System.out.println("Test1: " + TestClass.countObject); // 2
         System.out.println("Test2: " + TestClass.countObject); // 1
         System.out.println("Test3: " + TestClass.countObject);
