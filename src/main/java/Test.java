@@ -21,6 +21,7 @@ public class Test {
 
 // create new generic class BOX
 // add some more description on T
+// new description
 
 class Box<T> {
 	// T stands for "Type"
