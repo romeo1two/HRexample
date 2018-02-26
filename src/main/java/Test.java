@@ -7,7 +7,7 @@ public class Test {
         TestClass<A> test2 = new TestClass<A>();
         TestClass<B> test3 = new TestClass<B>();
         
-        // Box class declaration
+        // Box class declaration  +
         Box<A> test4 = new Box<A>();
         Box<B> test5 = new Box<B>();
         // 
