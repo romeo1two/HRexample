@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-// new updates
+// new updates here
 @Entity
 @Table (name = "students")
 @NamedQueries({
