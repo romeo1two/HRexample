@@ -1,6 +1,6 @@
 package com.navinski.student.entity;
 
-// some new text for a new commit #93-1
+// some new text for a new commit #93-2
 
 // some text
 // additional info
